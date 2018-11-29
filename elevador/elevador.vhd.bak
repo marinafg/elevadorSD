@@ -1,0 +1,43 @@
+
+-- A library clause declares a name as a library.  It 
+-- does not create the library; it simply forward declares 
+-- it. 
+library ieee;
+
+entity elevador is
+	port
+	(
+		-- Input ports
+		BSA, BSB, BDB, BDC, A, B, C, BIA, BIB, BIC	: in  std_logic_vector (1 DOWNTO 0);
+
+		-- Output ports
+		ANDAR	: out std_logic_vector (1 DOWNTO 0);
+		ABRIR	: out std_logic;
+	);
+end elevador;
+
+-- Library Clause(s) (optional)
+-- Use Clause(s) (optional)
+
+architecture sistema of elevador is
+
+	-- Declarations (optional)
+
+begin
+
+	-- Process Statement (optional)
+	process
+
+	-- Concurrent Procedure Call (optional)
+
+	-- Concurrent Signal Assignment (optional)
+
+	-- Conditional Signal Assignment (optional)
+
+	-- Selected Signal Assignment (optional)
+
+	-- Component Instantiation Statement (optional)
+
+	-- Generate Statement (optional)
+
+end sistema;
