@@ -4,6 +4,7 @@
 -- does not create the library; it simply forward declares 
 -- it. 
 library ieee;
+use ieee.std_logic_1164.all;
 
 entity elevador is
 	port
@@ -11,9 +12,9 @@ entity elevador is
 		-- Input ports
 		A, B, C, BSA, BSB, BDB, BDC, BIA, BIB, BIC : in std_logic;
 		-- Output ports
-		ANDAR	: out std_logic_vector (1 DOWNTO 0);
-		ABRIR	: out std_logic;
-		ANDARD : out std_logic_vector(1 DOWNTO 0);
+		ANDARATIVO	: out std_logic_vector (1 DOWNTO 0);
+		ABRIRPORTA	: out std_logic;
+		ANDARDESTNO : out std_logic_vector(1 DOWNTO 0)
 	);
 end elevador;
 
@@ -22,12 +23,12 @@ end elevador;
 
 architecture sistema of elevador is
 
-	signal aa, bb, cc, an: std_logic_vector(1 DOWNTO 0);
+	signal an: std_logic_vector(1 DOWNTO 0);
 	signal bi: std_logic_vector(1 DOWNTO 0);
-	signal sad : std_logic_vector(1 DOWNTO 0);
+	signal ab : std_logic;
 	
 begin	
-	process(A, B, C)
+		process(bi, A, B, C)
 			begin
 			  if A = '1' then
 				 an <= "00";
@@ -39,47 +40,33 @@ begin
 				an <= "00";
 			  end if;
 			end process;
-		end process;
-		ANDAR <= an;
-		process(BIA, BIB, BIC, BSA, BSB, BDB, BDC)
+		ANDARATIVO <= an;
+		
+		process(BIA, BIB, BIC, BSA, BSB, BDB, BDC,  A, B, C)
 			begin
-			  if BIA = '1' and A = '0' then
+			  if (BIA = '1' and A = '0') or (BSA = '1' and A = '0') then
 				 bi <= "00";
-			  elsif BIB = '1' and B = '0' then
+			  elsif (BIB = '1' and B = '0') or (BSB = '1' and B = '0') or (BDB = '1' and B = '0') then
 				 bi <= "01";
-			  elsif BIC = '1' and C = '0' then
+			  elsif (BIC = '1' and C = '0') or (BDC = '1' and C = '0') then
 				 bi <= "10";
 				else
 					bi <= "00";
 			  end if;
 			end process;
-		ANDARD <= bi;
-		process(bi)
+		ANDARDESTNO <= bi;
+		
+		process(an, bi)
 			begin
-			  if BIA = '1' then
-				 bi <= "00";
-			  elsif BIB = '1' then
-				 bi <= "01";
-			  elsif BIC = '1' then
-				 bi <= "10";
+			  if (an = "00") and (bi = "00") then
+				 ab <= '1';
+			  elsif (an = "01") and (bi = "01") then
+				 ab <= '1';
+			  elsif (an = "10") and (bi = "10") then
+				 ab <= '1';
 				else
-					bi <= "00";
+					ab <='0';
 			  end if;
 			end process;
-		ABRIR 
-			
-		process(BIA, BIB, BIC)
-							 
-	-- Concurrent Procedure Call (optional)
-
-	-- Concurrent Signal Assignment (optional)
-
-	-- Conditional Signal Assignment (optional)
-
-	-- Selected Signal Assignment (optional)
-
-	-- Component Instantiation Statement (optional)
-
-	-- Generate Statement (optional)
-
+		ABRIRPORTA <= ab;	
 end sistema;
